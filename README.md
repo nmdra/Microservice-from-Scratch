@@ -20,9 +20,9 @@ architecture-beta
 
     service client(internet)[Client]
     service nginx(server)[NGINX] in api
-    service item(server)[Item Service<br/>Node.js] in services
-    service order(server)[Order Service<br/>Go] in services
-    service payment(server)[Payment Service<br/>Python] in services
+    service item(server)[Item Service] in services
+    service order(server)[Order Service] in services
+    service payment(server)[Payment Service] in services
     service postgres(database)[PostgreSQL] in db
 
     client:R --> L:nginx
