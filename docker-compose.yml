@@ -1,0 +1,56 @@
+services:
+  postgres:
+    image: postgres:alpine
+    env_file:
+      - .env
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - 5432:5432
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - micro
+
+  item-service:
+    build: ./item-service
+    env_file: .env
+    depends_on:
+      - postgres
+    networks:
+      - micro
+
+  order-service:
+    build: ./order-service
+    env_file: .env
+    depends_on:
+      - postgres
+    networks:
+      - micro
+
+  payment-service:
+    build: ./payment-service
+    env_file: .env
+    depends_on:
+      - postgres
+    networks:
+      - micro
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./api-gateway/nginx.conf:/etc/nginx/nginx.conf:ro
+    restart: unless-stopped
+    depends_on:
+      - item-service
+      - order-service
+      - payment-service
+    networks:
+      - micro
+
+networks:
+  micro:
+

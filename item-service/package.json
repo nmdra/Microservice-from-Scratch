@@ -1,0 +1,14 @@
+{
+  "name": "item-service",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "express": "^5.2.1",
+    "pg": "^8.19.0"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}
